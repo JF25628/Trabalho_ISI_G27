@@ -60,10 +60,27 @@ namespace PremierLeagueAPI.Services
             return stadium;
         }
 
+        //public async Task CreateStadiumAsync(Stadium stadium)
+        //{
+        //    string query = $"INSERT INTO Stadiums (name, city, capacity) VALUES ('{stadium.Name}', '{stadium.City}', {stadium.Capacity})";
+        //    await _context.ExecuteQueryAsync(query);
+        //}
+
         public async Task CreateStadiumAsync(Stadium stadium)
         {
-            string query = $"INSERT INTO Stadiums (name, city, capacity) VALUES ('{stadium.Name}', '{stadium.City}', {stadium.Capacity})";
-            await _context.ExecuteQueryAsync(query);
+            try
+            {
+                // Construindo a string de consulta SQL
+                string query = $"INSERT INTO Stadiums (name, city, capacity) " +
+                    $"VALUES ('{stadium.Name}', '{stadium.City}', {stadium.Capacity})";
+                System.IO.File.AppendAllText("log.txt", query);
+                // Executando a consulta SQL
+                await _context.ExecuteQueryAsync(query); // Aqui passa apenas a string da consulta
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show($"Erro ao adicionar partida: {ex.Message}");
+            }
         }
 
         public async Task UpdateStadiumAsync(Stadium stadium)

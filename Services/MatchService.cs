@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace PremierLeagueAPI.Services
 {
@@ -68,12 +69,54 @@ namespace PremierLeagueAPI.Services
             return match;
         }
 
+        //public async Task CreateMatchAsync(Match match)
+        //{
+        //    string query = $"INSERT INTO Matches (home_team_id, away_team_id, stadium_id, match_date, home_score, away_score) " +
+        //        $"VALUES ({match.HomeTeamId}, {match.AwayTeamId}, {match.StadiumId}, '{match.MatchDate}', {match.HomeScore}, {match.AwayScore})";
+        //    await _context.ExecuteQueryAsync(query);
+        //}
+
+        //public async Task CreateMatchAsync(Match match)
+        //{
+        //    string query = "INSERT INTO Matches (home_team_id, away_team_id, stadium_id, match_date, home_score, away_score) " +
+        //                   "VALUES (@HomeTeamId, @AwayTeamId, @StadiumId, @MatchDate, @HomeScore, @AwayScore)";
+
+        //    // Criando os parâmetros
+        //    var parameters = new[]
+        //    {
+        //        new SqlParameter("@HomeTeamId", SqlDbType.Int) { Value = match.HomeTeamId },
+        //        new SqlParameter("@AwayTeamId", SqlDbType.Int) { Value = match.AwayTeamId },
+        //        new SqlParameter("@StadiumId", SqlDbType.Int) { Value = match.StadiumId },
+        //        new SqlParameter("@MatchDate", SqlDbType.DateTime) { Value = match.MatchDate.ToString("yyyy-MM-ddTHH:mm:ss") }, // Certificando que a data está em um formato válido
+        //        new SqlParameter("@HomeScore", SqlDbType.Int) { Value = match.HomeScore },
+        //        new SqlParameter("@AwayScore", SqlDbType.Int) { Value = match.AwayScore }
+        //    };
+
+        //    // Executando a query com parâmetros
+        //    await _context.ExecuteQueryAsync(query, parameters);
+        //}
+
         public async Task CreateMatchAsync(Match match)
         {
-            string query = $"INSERT INTO Matches (home_team_id, away_team_id, stadium_id, match_date, home_score, away_score) " +
-                $"VALUES ({match.HomeTeamId}, {match.AwayTeamId}, {match.StadiumId}, '{match.MatchDate}', {match.HomeScore}, {match.AwayScore})";
-            await _context.ExecuteQueryAsync(query);
+            try
+            {
+                // Formatando a data para o formato desejado
+                string matchDate = match.MatchDate.ToString("yyyy-MM-ddTHH:mm:ss");
+
+                // Construindo a string de consulta SQL
+                string query = $"INSERT INTO Matches (home_team_id, away_team_id, stadium_id, match_date, home_score, away_score) " +
+                               $"VALUES ({match.HomeTeamId}, {match.AwayTeamId}, {match.StadiumId}, '{matchDate}', {match.HomeScore}, {match.AwayScore})";
+
+                // Executando a consulta SQL
+                await _context.ExecuteQueryAsync(query); // Aqui passa apenas a string da consulta
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show($"Erro ao adicionar partida: {ex.Message}");
+            }
         }
+
+
 
         public async Task UpdateMatchAsync(Match match)
         {

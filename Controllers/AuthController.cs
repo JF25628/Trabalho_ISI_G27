@@ -16,6 +16,11 @@ namespace PremierLeagueAPI.Controllers
             _jwtService = jwtService;
         }
 
+        /// <summary>
+        /// login
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         [HttpPost("login")]
         public IActionResult Login([FromBody] Login login)
         {

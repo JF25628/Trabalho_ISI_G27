@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PremierLeagueAPI</name>
+    </assembly>
+    <members>
+        <member name="M:PremierLeagueAPI.Controllers.AuthController.Login(PremierLeagueAPI.Models.Login)">
+            <summary>
+            login
+            </summary>
+            <param name="login"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PremierLeagueAPI.Controllers.MatchController.GetMatches">
+            <summary>
+            retorna todas as partidas
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

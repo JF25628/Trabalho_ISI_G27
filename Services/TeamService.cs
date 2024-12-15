@@ -4,6 +4,7 @@ using PremierLeagueAPI.Interfaces;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace PremierLeagueAPI.Services
 {
@@ -62,9 +63,28 @@ namespace PremierLeagueAPI.Services
 
         public async Task CreateTeamAsync(Team team)
         {
-            string query = $"INSERT INTO Teams (name, founded, stadium) VALUES ('{team.Name}', '{team.Founded}', '{team.Stadium}')";
-            await _context.ExecuteQueryAsync(query);
+            try
+            {
+                // Formatting the DateTime value correctly
+                string matchDate = team.Founded.ToString("yyyy-MM-ddTHH:mm:ss");
+
+                // Creating the SQL query with proper formatting
+                string query = $"INSERT INTO Teams (name, founded, stadium) " +
+                               $"VALUES ('{team.Name}', '{matchDate}', '{team.Stadium}')";
+
+                // Log the query for debugging
+                System.IO.File.AppendAllText("log.txt", query + Environment.NewLine);
+
+                // Executing the query
+                await _context.ExecuteQueryAsync(query);
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                System.IO.File.AppendAllText("log.txt", "Error: " + ex.Message + Environment.NewLine);
+            }
         }
+
 
         public async Task UpdateTeamAsync(Team team)
         {

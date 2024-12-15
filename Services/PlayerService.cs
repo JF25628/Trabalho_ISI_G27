@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using PremierLeagueAPI.Interfaces;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace PremierLeagueAPI.Services
 {
@@ -62,11 +63,34 @@ namespace PremierLeagueAPI.Services
             return player;
         }
 
+        //public async Task CreatePlayerAsync(Player player)
+        //{
+        //    string query = $"INSERT INTO Players (name, birth_date, position, team_id) VALUES ('{player.Name}', '{player.BirthDate}', '{player.Position}', {player.TeamId})";
+        //    await _context.ExecuteQueryAsync(query);
+        //}
+
+
         public async Task CreatePlayerAsync(Player player)
         {
-            string query = $"INSERT INTO Players (name, birth_date, position, team_id) VALUES ('{player.Name}', '{player.BirthDate}', '{player.Position}', {player.TeamId})";
-            await _context.ExecuteQueryAsync(query);
+            try
+            {
+                // Formatando a data de nascimento para o formato desejado
+                string birthdate = player.BirthDate.ToString("yyyy-MM-ddTHH:mm:ss");
+
+                // Construindo a string de consulta SQL
+                string query = $"INSERT INTO Players (name, birth_date, position, team_id) " +
+                    $"VALUES ('{player.Name}', '{birthdate}', '{player.Position}', {player.TeamId})";
+                Console.WriteLine(query);
+                System.IO.File.AppendAllText("log.txt", query);
+                // Executando a consulta SQL
+                await _context.ExecuteQueryAsync(query); // Passa apenas a string da consulta
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show($"Erro ao adicionar jogador: {ex.Message}");
+            }
         }
+
 
         public async Task UpdatePlayerAsync(Player player)
         {

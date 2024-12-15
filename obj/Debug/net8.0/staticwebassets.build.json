@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "DiFWvhk7bOlj3HT1PyG1WOCeaVTnr5h0Isr+UWiCiFA=",
+  "Hash": "kWwkF/hErLYpCfUFTiY21aT+1IsRf//TuHGzAJnE4Vw=",
   "Source": "PremierLeagueAPI",
   "BasePath": "_content/PremierLeagueAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

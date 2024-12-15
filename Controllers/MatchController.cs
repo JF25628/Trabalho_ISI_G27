@@ -19,6 +19,10 @@ namespace PremierLeagueAPI.Controllers
             _matchService = matchService;
         }
 
+        /// <summary>
+        /// retorna todas as partidas
+        /// </summary>
+        /// <returns></returns>
         // GET: api/match
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Match>>> GetMatches()
@@ -41,7 +45,6 @@ namespace PremierLeagueAPI.Controllers
 
         // POST: api/match
         [HttpPost]
-
         public async Task<ActionResult> CreateMatch([FromBody] Match match)
         {
             if (match == null)

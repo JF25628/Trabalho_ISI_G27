@@ -65,7 +65,17 @@ builder.Services.AddAuthentication("Bearer")
 // Configurar Swagger com suporte à API Key
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PremierLeague API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { 
+        Title = "PremierLeague API", 
+        Version = "v1",
+        Description = "Web API da Premier League",
+        Contact = new OpenApiContact
+        {
+            Name = "Integração de Sistemas de Informação 2023/24",
+            Email = string.Empty,
+            Url = new Uri("https://www.ipca.pt/"),
+        }
+    });
 
     // Adicionar suporte à API Key no Swagger
     c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
@@ -90,6 +100,10 @@ builder.Services.AddSwaggerGen(c =>
             Array.Empty<string>()
         }
     });
+
+    // Incluir os comentários XML
+    var filePath = Path.Combine(AppContext.BaseDirectory, "PremierLeagueAPI.xml");
+    c.IncludeXmlComments(filePath);
 });
 
 // Configuração de conexão com banco de dados
@@ -101,6 +115,17 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+
+// Configurar o pipeline de requisição HTTP
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "PremierLeagueAPI v1");
+    });
+}
 
 
 

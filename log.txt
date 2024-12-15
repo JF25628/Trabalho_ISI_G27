@@ -1,0 +1,1 @@
+INSERT INTO Players (name, birth_date, position, team_id) VALUES ('qwerq', '2024-12-14T19:58:12', 'qwer', 1)INSERT INTO Players (name, birth_date, position, team_id) VALUES ('rggrgr', '2024-12-14T20:01:04', 'Goalkeeper', 1)
